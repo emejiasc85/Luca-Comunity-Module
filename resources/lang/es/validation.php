@@ -148,5 +148,6 @@ return [
         'password_confirmation' => 'confirmación de la contraseña',
         'gender_id'             => 'genero',
         'age'                   => 'edad',
+        'level_id'              => 'nivel escolar',
     ],
 ];
