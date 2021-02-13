@@ -9,6 +9,7 @@ Route::namespace('v1')->prefix('v1')->group(function()
         Route::apiResource('/school-grades', SchoolGradeController::class);
         Route::apiResource('/courses', CourseController::class);
         Route::apiResource('/course-assignments', CourseAssignmentController::class);
+        Route::apiResource('/questions', QuestionController::class);
     });
 
 });

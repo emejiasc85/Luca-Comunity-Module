@@ -10,7 +10,7 @@ class CourseAssignmentTest extends TestCase{
     
     use RefreshDatabase;
 
-    function test_list_course_assignment_assignments()
+    function test_list_course_assignments()
     {
         $this->signIn();
 

@@ -152,5 +152,8 @@ return [
         'user_id'               => 'usuario',
         'course_id'             => 'curso',
         'grade_id'              => 'grado escolar',
+        'assignment_id'         => 'curso asignado',
+        'question'              => 'pregunta',
+        'description'           => 'descripción',
     ],
 ];
