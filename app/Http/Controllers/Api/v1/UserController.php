@@ -7,13 +7,10 @@ use App\Http\Requests\Api\v1\UserStoreRequest;
 use App\Http\Requests\Api\v1\UserUpdateRequest;
 use App\Http\Resources\Api\v1\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
-
-use function PHPSTORM_META\map;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $users = User::query()
             ->search()
