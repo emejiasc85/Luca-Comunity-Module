@@ -149,5 +149,8 @@ return [
         'gender_id'             => 'genero',
         'age'                   => 'edad',
         'level_id'              => 'nivel escolar',
+        'user_id'               => 'usuario',
+        'course_id'             => 'curso',
+        'grade_id'              => 'grado escolar',
     ],
 ];
