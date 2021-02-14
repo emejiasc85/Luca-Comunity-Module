@@ -17,7 +17,6 @@ class UserApiResource extends JsonResource
         return [
             'id'        => $this->id, 
             'name'      => $this->name,
-            'phone'     => $this->phone,
             'email'     => $this->email,
             'api_token' => $this->createToken(request()->device_name)->plainTextToken
         ];
