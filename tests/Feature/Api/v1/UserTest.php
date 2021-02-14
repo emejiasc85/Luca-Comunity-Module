@@ -212,7 +212,7 @@ class UserTest extends TestCase{
         $this->deleteJson('api/v1/users/'.$user->id)
             ->assertStatus(204);
 
-        $this->assertSoftDeleted('users', [
+        $this->assertDatabaseMissing('users', [
             'id' => $user->id
         ]);
     }
