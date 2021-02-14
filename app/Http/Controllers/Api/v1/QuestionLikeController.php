@@ -18,9 +18,12 @@ class QuestionLikeController extends Controller
         }
         
         if($likes->count() == 0){
-            $question->likes()->create([
+            $like = $question->likes()->create([
                 'user_id' => auth()->id()
             ]);
+
+            $like->sendNotification();
+
         }
 
         return response([], 200);

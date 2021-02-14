@@ -16,9 +16,11 @@ class QuestionFavoriteController extends Controller
         }
         
         if($favorites->count() == 0){
-            $question->favorites()->create([
+            $favorite = $question->favorites()->create([
                 'user_id' => auth()->id()
             ]);
+
+            $favorite->sendNotification();
         }
         
         return response([], 200);

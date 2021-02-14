@@ -16,9 +16,11 @@ class QuestionFollowController extends Controller
         }
         
         if($follows->count() == 0){
-            $question->follows()->create([
+            $follow = $question->follows()->create([
                 'user_id' => auth()->id()
             ]);
+
+            $follow->sendNotification();
         }
         
         return response([], 200);
