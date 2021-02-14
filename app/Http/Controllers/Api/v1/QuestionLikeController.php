@@ -10,6 +10,8 @@ class QuestionLikeController extends Controller
 {
     public function store(QuestionLikeStoreRequest $request, Question $question)
     {
+        $question->dislikes()->where('user_id', auth()->id())->delete();
+        
         $question->likes()->create([
             'user_id' => auth()->id()
         ]);
