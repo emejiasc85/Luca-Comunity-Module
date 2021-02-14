@@ -36,6 +36,11 @@ class Question extends Model
         return $this->hasMany(QuestionLike::class);
     }
 
+    public function dislikes()
+    {
+        return $this->hasMany(QuestionDislike::class);
+    }
+
     /* scopes */
     
     public function scopeSearch($query)

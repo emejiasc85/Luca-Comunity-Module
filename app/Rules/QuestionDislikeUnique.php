@@ -2,10 +2,10 @@
 
 namespace App\Rules;
 
-use App\Models\QuestionLike;
+use App\Models\QuestionDislike;
 use Illuminate\Contracts\Validation\Rule;
 
-class QuestionLikeUnique implements Rule
+class QuestionDislikeUnique implements Rule
 {
     /**
      * Create a new rule instance.
@@ -26,7 +26,7 @@ class QuestionLikeUnique implements Rule
      */
     public function passes($attribute, $value)
     {
-        $likes = QuestionLike::query()
+        $likes = QuestionDislike::query()
             ->where('user_id', auth()->id())
             ->where('question_id', request()->route()->question->id)
             ->count();
@@ -42,6 +42,6 @@ class QuestionLikeUnique implements Rule
      */
     public function message()
     {
-        return 'Ya has registrado que te gusta esta pregunta.';
+        return 'Ya has registrado que no te gusta esta pregunta.';
     }
 }
