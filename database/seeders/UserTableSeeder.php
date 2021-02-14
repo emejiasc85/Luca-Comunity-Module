@@ -19,5 +19,9 @@ class UserTableSeeder extends Seeder
             'age'      => 35,
             'password' => 'password'
         ])->create();
+
+        User::factory([
+            'gender_id' => 1
+        ])->times(15)->create();
     }
 }
