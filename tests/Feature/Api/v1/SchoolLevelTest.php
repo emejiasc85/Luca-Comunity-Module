@@ -116,7 +116,6 @@ class SchoolLevelTest extends TestCase{
     
     function test_update_a_school_level()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
 
         $schoolLevel = SchoolLevel::factory()->create();

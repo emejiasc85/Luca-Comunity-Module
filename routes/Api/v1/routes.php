@@ -10,6 +10,7 @@ Route::namespace('v1')->prefix('v1')->group(function()
         Route::apiResource('/courses', CourseController::class);
         Route::apiResource('/course-assignments', CourseAssignmentController::class);
         Route::apiResource('/questions', QuestionController::class);
+        Route::apiResource('question/{question}/answers', AnswerController::class);
     });
 
 });

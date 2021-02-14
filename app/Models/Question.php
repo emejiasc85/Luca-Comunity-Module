@@ -26,6 +26,11 @@ class Question extends Model
         return $this->belongsTo(CourseAssignment::class);
     }
 
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
     /* scopes */
     
     public function scopeSearch($query)

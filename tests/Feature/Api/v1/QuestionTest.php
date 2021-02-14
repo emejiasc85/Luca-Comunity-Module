@@ -85,7 +85,6 @@ class QuestionTest extends TestCase{
     function test_store_a_question()
     {
 
-        $this->withoutExceptionHandling();
         $user = $this->signIn();
 
         $data = Question::factory()->make();
