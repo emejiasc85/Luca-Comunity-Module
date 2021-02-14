@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class QuestionDislike extends Model
+class QuestionFollow extends Model
 {
     use HasFactory;
 
-    protected $table   = 'question_dislikes';
+    protected $table   = 'question_follows';
     protected $guarded = [];
 
     /* relations */
@@ -23,5 +23,4 @@ class QuestionDislike extends Model
     {
         return $this->belongsTo(User::class);
     }
-
 }

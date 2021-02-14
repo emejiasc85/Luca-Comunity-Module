@@ -31,6 +31,16 @@ class Question extends Model
         return $this->hasMany(Answer::class);
     }
 
+    public function favorites()
+    {
+        return $this->hasMany(QuestionFavorite::class);
+    }
+    
+    public function follows()
+    {
+        return $this->hasMany(QuestionFollow::class);
+    }
+    
     public function likes()
     {
         return $this->hasMany(QuestionLike::class);
