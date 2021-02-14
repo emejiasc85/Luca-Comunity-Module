@@ -55,7 +55,6 @@ class QuestionLikeTest extends TestCase{
     
     function test_an_user_can_toggle_like_a_question()
     {
-        $this->withoutExceptionHandling();
 
         $user = $this->signIn();
         

@@ -60,4 +60,20 @@ class Question extends Model
                 ->orWhere('description', 'LIKE', '%'.request()->search.'%');
         });
     }
+
+    public function scopeOrdered($query)
+    {
+        $query->when(request()->filled('order_by'), function($query){
+            $query->orderBy(request()->order_by, request()->order);
+        });
+    }
+    
+    public function scopeFollowed($query)
+    {
+        $query->when(request()->filled('followed'), function($query){
+            $query->whereHas('follows', function($query){
+                $query->where('user_id', auth()->id());
+            });
+        });
+    }
 }

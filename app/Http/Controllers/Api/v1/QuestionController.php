@@ -14,7 +14,9 @@ class QuestionController extends Controller
     {
         $question = Question::query()
             ->search()
-            ->with(['user', 'assignment.level', 'assignment.grade', 'assignment.course'])
+            ->with(['user', 'assignment.level', 'assignment.grade', 'assignment.course', 'answers.user', ])
+            ->followed()
+            ->ordered()
             ->paginate();
 
         return QuestionResource::collection($question);
@@ -22,7 +24,7 @@ class QuestionController extends Controller
     
     public function show(Question $question)
     {
-        $question->load(['user', 'assignment.level', 'assignment.grade', 'assignment.course']);
+        $question->load(['user', 'assignment.level', 'assignment.grade', 'assignment.course', 'answers.user']);
         return new QuestionResource($question);
     }
 

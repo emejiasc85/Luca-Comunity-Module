@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api\v1;
 
 use App\Models\Question;
+use App\Models\QuestionFollow;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,6 +13,7 @@ class QuestionTest extends TestCase{
 
     function test_list_questions()
     {
+       
         $this->signIn();
 
         $question = Question::factory()->create();
@@ -43,6 +45,187 @@ class QuestionTest extends TestCase{
                             'name' => $question->user->name,
                         ],
                     ]
+                ]
+            ]);
+    }
+    
+    function test_list_questions_order_by_popularity()
+    {
+        $this->signIn();
+
+        $question = Question::factory()->create();
+        $otherQuestion = Question::factory()->create();
+
+        $parameters = [
+            'order_by' => 'created_at',
+            'order'    => 'Desc',
+        ];
+
+        $this->getJson('api/v1/questions', $parameters)
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    0 => [
+                        'id'   => $question->id,
+                        'question' => $question->question,
+                        'description' => $question->description,
+                        'assignment' => [
+                            'level' => [
+                                'id'   => $question->assignment->level_id,
+                                'name' => $question->assignment->level->name,
+                            ],
+                            'grade' => [
+                                'id'   => $question->assignment->grade_id,
+                                'name' => $question->assignment->grade->name,
+                            ],
+                            'course' => [
+                                'id'   => $question->assignment->course_id,
+                                'name' => $question->assignment->course->name,
+                            ],
+                        ],
+                        'user' => [
+                            'id'   => $question->user_id,
+                            'name' => $question->user->name,
+                        ],
+                    ],
+                    1 => [
+                        'id'   => $otherQuestion->id,
+                        'question' => $otherQuestion->question,
+                        'description' => $otherQuestion->description,
+                        'assignment' => [
+                            'level' => [
+                                'id'   => $otherQuestion->assignment->level_id,
+                                'name' => $otherQuestion->assignment->level->name,
+                            ],
+                            'grade' => [
+                                'id'   => $otherQuestion->assignment->grade_id,
+                                'name' => $otherQuestion->assignment->grade->name,
+                            ],
+                            'course' => [
+                                'id'   => $otherQuestion->assignment->course_id,
+                                'name' => $otherQuestion->assignment->course->name,
+                            ],
+                        ],
+                        'user' => [
+                            'id'   => $otherQuestion->user_id,
+                            'name' => $otherQuestion->user->name,
+                        ],
+                    ]
+                ]
+            ]);
+    }
+    
+    function test_list_questions_order_by_newest()
+    {
+        $this->signIn();
+
+        $question = Question::factory()->create();
+        $otherQuestion = Question::factory()->create();
+
+        $parameters = [
+            'order_by' => 'created_at',
+            'order'    => 'Desc',
+        ];
+
+        $this->getJson('api/v1/questions', $parameters)
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    0 => [
+                        'id'   => $question->id,
+                        'question' => $question->question,
+                        'description' => $question->description,
+                        'assignment' => [
+                            'level' => [
+                                'id'   => $question->assignment->level_id,
+                                'name' => $question->assignment->level->name,
+                            ],
+                            'grade' => [
+                                'id'   => $question->assignment->grade_id,
+                                'name' => $question->assignment->grade->name,
+                            ],
+                            'course' => [
+                                'id'   => $question->assignment->course_id,
+                                'name' => $question->assignment->course->name,
+                            ],
+                        ],
+                        'user' => [
+                            'id'   => $question->user_id,
+                            'name' => $question->user->name,
+                        ],
+                    ],
+                    1 => [
+                        'id'   => $otherQuestion->id,
+                        'question' => $otherQuestion->question,
+                        'description' => $otherQuestion->description,
+                        'assignment' => [
+                            'level' => [
+                                'id'   => $otherQuestion->assignment->level_id,
+                                'name' => $otherQuestion->assignment->level->name,
+                            ],
+                            'grade' => [
+                                'id'   => $otherQuestion->assignment->grade_id,
+                                'name' => $otherQuestion->assignment->grade->name,
+                            ],
+                            'course' => [
+                                'id'   => $otherQuestion->assignment->course_id,
+                                'name' => $otherQuestion->assignment->course->name,
+                            ],
+                        ],
+                        'user' => [
+                            'id'   => $otherQuestion->user_id,
+                            'name' => $otherQuestion->user->name,
+                        ],
+                    ]
+                ]
+            ]);
+    }
+    
+    function test_list_questions_order_by_followed_user()
+    {
+        $user = $this->signIn();
+
+        $question = Question::factory()->create();
+        $otherQuestion = Question::factory()->create();
+
+        $follow = QuestionFollow::factory([
+            'user_id'     => $user->id,
+            'question_id' => $question->id
+        ])->create();
+
+        $parameters = [
+            'followed' => 'true',
+            'order_by' => 'created_at',
+            'order'    => 'Desc',
+        ];
+
+        $this->getJson('api/v1/questions', $parameters)
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    0 => [
+                        'id'   => $question->id,
+                        'question' => $question->question,
+                        'description' => $question->description,
+                        'assignment' => [
+                            'level' => [
+                                'id'   => $question->assignment->level_id,
+                                'name' => $question->assignment->level->name,
+                            ],
+                            'grade' => [
+                                'id'   => $question->assignment->grade_id,
+                                'name' => $question->assignment->grade->name,
+                            ],
+                            'course' => [
+                                'id'   => $question->assignment->course_id,
+                                'name' => $question->assignment->course->name,
+                            ],
+                        ],
+                        'user' => [
+                            'id'   => $question->user_id,
+                            'name' => $question->user->name,
+                        ],
+                    ],
                 ]
             ]);
     }

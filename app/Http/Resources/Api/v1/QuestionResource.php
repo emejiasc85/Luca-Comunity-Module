@@ -18,8 +18,13 @@ class QuestionResource extends JsonResource
             'id'          => $this->id,
             'question'    => $this->question,
             'description' => $this->description,
+            'likes'       => $this->likes->count(),
+            'dislikes'    => $this->dislikes->count(),
+            'favorites'   => $this->favorites->count(),
+            'follows'     => $this->follows->count(),
             'assignment'  => new CourseAssignmentResource($this->whenLoaded('assignment')),
             'user'        => new UserResource($this->whenLoaded('user')),
+            'answers'     => AnswerResource::collection($this->whenLoaded('answer')),
         ];
     }
 }

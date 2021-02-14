@@ -12,7 +12,7 @@ class QuestionFavoriteTest extends TestCase{
     
     function test_an_user_can_toggle_favorite_a_question()
     {
-        $this->withoutExceptionHandling();
+        
         $user = $this->signIn();
 
         $question = Question::factory()->create();
