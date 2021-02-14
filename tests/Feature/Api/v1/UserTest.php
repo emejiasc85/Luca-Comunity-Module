@@ -96,7 +96,7 @@ class UserTest extends TestCase{
             ]);
     }
     
-    function test_store_a_user()
+    function test_store_an_user()
     {
         $this->signIn();
 
@@ -129,7 +129,7 @@ class UserTest extends TestCase{
         ]);
     }
     
-    function test_validate_before_store_a_user()
+    function test_validate_before_store_an_user()
     {
         $this->signIn();
 
@@ -148,7 +148,7 @@ class UserTest extends TestCase{
             ]);
     }
     
-    function test_update_a_user()
+    function test_update_an_user()
     {
         $this->signIn();
 
@@ -202,7 +202,7 @@ class UserTest extends TestCase{
             ]);
     }
     
-    function test_destroy_a_user()
+    function test_destroy_an_user()
     {
         $this->signIn();
 

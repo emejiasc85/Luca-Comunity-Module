@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\v1\QuestionLikeController;
+
 Route::namespace('v1')->prefix('v1')->group(function()
 {   
 
@@ -11,6 +13,7 @@ Route::namespace('v1')->prefix('v1')->group(function()
         Route::apiResource('/course-assignments', CourseAssignmentController::class);
         Route::apiResource('/questions', QuestionController::class);
         Route::apiResource('question/{question}/answers', AnswerController::class);
+        Route::post('question/{question}/likes', [QuestionLikeController::class, 'store']);
     });
 
 });
