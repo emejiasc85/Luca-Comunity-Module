@@ -52,7 +52,6 @@ class QuestionTest extends TestCase{
     
     function test_list_questions_order_by_popularity()
     {
-        $this->withoutExceptionHandling();
         $this->signIn();
 
         $question = Question::factory()->create();
