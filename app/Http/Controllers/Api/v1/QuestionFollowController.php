@@ -12,7 +12,7 @@ class QuestionFollowController extends Controller
         $follows = $question->follows()->where('user_id', auth()->id())->get();
 
         if($follows->count() > 0){
-            $follows->delete();
+            $question->follows()->where('user_id', auth()->id())->delete();
         }
         
         if($follows->count() == 0){

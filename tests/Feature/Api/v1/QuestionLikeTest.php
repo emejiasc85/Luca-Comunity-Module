@@ -14,17 +14,12 @@ class QuestionLikeTest extends TestCase{
     
     function test_an_user_can_like_a_question()
     {
-        $this->withoutExceptionHandling();
         $user = $this->signIn();
 
         $question = Question::factory()->create();
 
-        $parameters = [
-            'like' => true
-        ];
-
-        $this->postJson('api/v1/question/'.$question->id.'/likes', $parameters)
-            ->assertStatus(201);
+        $this->postJson('api/v1/question/'.$question->id.'/likes')
+            ->assertStatus(200);
 
         $this->assertDatabaseHas('question_likes', [
             'question_id' => $question->id,
@@ -43,12 +38,8 @@ class QuestionLikeTest extends TestCase{
             'question_id' => $question->id
         ])->create();
 
-        $parameters = [
-            'like' => true
-        ];
-
-        $this->postJson('api/v1/question/'.$question->id.'/likes', $parameters)
-            ->assertStatus(201);
+        $this->postJson('api/v1/question/'.$question->id.'/likes')
+            ->assertStatus(200);
 
         $this->assertDatabaseHas('question_likes', [
             'question_id' => $question->id,
@@ -62,10 +53,11 @@ class QuestionLikeTest extends TestCase{
     }
     
     
-    function test_an_user_can_like_a_question_once()
+    function test_an_user_can_toggle_like_a_question()
     {
-        $user = $this->signIn();
+        $this->withoutExceptionHandling();
 
+        $user = $this->signIn();
         
         $question = Question::factory()->create();
 
@@ -73,18 +65,16 @@ class QuestionLikeTest extends TestCase{
             'user_id'     => $user->id,
             'question_id' => $question->id
         ])->create();
-        
-        $parameters = [
-            'like' => true
-        ];
 
-        $this->postJson('api/v1/question/'.$question->id.'/likes', $parameters)
-            ->assertStatus(422)
-            ->assertJson([
-                'errors' => [
-                    'like' => ['Ya has registrado que te gusta esta pregunta.']
-                ],
-            ]);
+        $this->postJson('api/v1/question/'.$question->id.'/likes')
+            ->assertStatus(200);
+        
+        $this->assertDatabaseMissing('question_likes', [
+            'question_id' => $question->id,
+            'user_id'     => $user->id,
+        ]);
+
+
     }
 
 }

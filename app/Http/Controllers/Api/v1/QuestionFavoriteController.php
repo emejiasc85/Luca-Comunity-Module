@@ -12,7 +12,7 @@ class QuestionFavoriteController extends Controller
         $favorites = $question->favorites()->where('user_id', auth()->id())->get();
 
         if($favorites->count() > 0){
-            $favorites->delete();
+            $question->favorites()->where('user_id', auth()->id())->delete();
         }
         
         if($favorites->count() == 0){
