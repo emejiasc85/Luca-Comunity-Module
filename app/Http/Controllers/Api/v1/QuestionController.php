@@ -12,14 +12,15 @@ class QuestionController extends Controller
 {
     public function index()
     {
-        $question = Question::query()
+        $questions = Question::query()
             ->search()
             ->with(['user', 'assignment.level', 'assignment.grade', 'assignment.course', 'answers.user', ])
-            ->followed()
+            ->onlyFollowed()
+            ->popularity()
             ->ordered()
             ->paginate();
 
-        return QuestionResource::collection($question);
+        return QuestionResource::collection($questions);
     }
     
     public function show(Question $question)

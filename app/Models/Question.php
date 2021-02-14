@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Question extends Model
 {
@@ -61,6 +62,18 @@ class Question extends Model
         });
     }
 
+    public function scopePopularity($query)
+    {
+        $query->when(request()->filled('popularity'), function($query){
+            $query->select('*')
+            ->addSelect(DB::raw('
+                (select count(*) from question_likes
+                where question_id = questions.id)
+                AS likes_count'))
+            ->orderBy('likes_count', 'Desc');
+        });
+    }
+
     public function scopeOrdered($query)
     {
         $query->when(request()->filled('order_by'), function($query){
@@ -68,7 +81,7 @@ class Question extends Model
         });
     }
     
-    public function scopeFollowed($query)
+    public function scopeOnlyFollowed($query)
     {
         $query->when(request()->filled('followed'), function($query){
             $query->whereHas('follows', function($query){

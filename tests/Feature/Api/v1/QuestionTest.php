@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\v1;
 
 use App\Models\Question;
 use App\Models\QuestionFollow;
+use App\Models\QuestionLike;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -51,17 +52,20 @@ class QuestionTest extends TestCase{
     
     function test_list_questions_order_by_popularity()
     {
+        $this->withoutExceptionHandling();
         $this->signIn();
 
         $question = Question::factory()->create();
+        QuestionLike::factory()->times(4)->create(['question_id' => $question->id]);
+        
         $otherQuestion = Question::factory()->create();
+        QuestionLike::factory()->times(2)->create(['question_id' => $otherQuestion->id]);
 
         $parameters = [
-            'order_by' => 'created_at',
-            'order'    => 'Desc',
+            'popularity' => true,
         ];
 
-        $this->getJson('api/v1/questions', $parameters)
+        $this->call('GET','api/v1/questions', $parameters)
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -194,7 +198,7 @@ class QuestionTest extends TestCase{
         ])->create();
 
         $parameters = [
-            'followed' => 'true',
+            'followed' => true,
             'order_by' => 'created_at',
             'order'    => 'Desc',
         ];
