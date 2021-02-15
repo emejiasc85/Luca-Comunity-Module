@@ -5,13 +5,13 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About 
+## Stack 
 
 - Php version 7.4.13.
 - MySql version 8.0.22.
 - Laravel version 8.12.
 
-## install
+## how to install?
 
 - Clone this repository.
 - Run  <code>composer install</code>
